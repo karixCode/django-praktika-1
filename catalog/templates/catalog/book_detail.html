@@ -2,13 +2,19 @@
 
 {% block content %}
   <h1>Title: {{ book.title }}</h1>
-
-  <p><strong>Author:</strong> <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
+<div class="d-flex justify-content-between">
+  <div>
+    <p><strong>Author:</strong> <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
+    <p><strong>Preview:</strong></p>
   <p><strong>Summary:</strong> {{ book.summary }}</p>
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
   <p><strong>Language:</strong> {{ book.language }}</p>
   <p><strong>Genre:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
+  </div>
+  {% if book.preview %}
+  <img class="w-50" src="{{ book.preview.url }}">
+  {% endif %}
+</div>
   <div style="margin-left:20px;margin-top:20px">
     <h4>Copies</h4>
 

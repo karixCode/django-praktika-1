@@ -1,22 +1,17 @@
 from django.shortcuts import render
 from django.views import generic
-
 # Create your views here.
 from .models import Book, Author, BookInstance, Genre
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
 from django.contrib.auth.decorators import permission_required
-
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import datetime
-
 from .forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Author
 
 def index(request):
     num_books=Book.objects.all().count()
@@ -65,8 +60,6 @@ class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
-
-
 
 @permission_required('catalog.can_mark_returned')
 def renew_book_librarian(request, pk):
